@@ -1,4 +1,4 @@
-const CHARACTERS_URL = "http://localhost:3000/characters";
+const CHARACTERS_URL = "https://api.npoint.io/250c9b40cce5106a0051";
 const animalList = document.getElementById("animals-list");
 const animalDetailsContainer = document.getElementById("animal-details");
 const voteButton = document.getElementById("vote-button");
