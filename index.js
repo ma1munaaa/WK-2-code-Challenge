@@ -5,14 +5,16 @@ const voteButton = document.getElementById("vote-button");
 const resetButton = document.getElementById("reset-button");
 const addAnimalForm = document.getElementById("add-animal-form");
 
-// FETCH
-
-fetch(CHARACTERS_URL)
-  .then(res => { return res.json()})
-  .then(data => {
+// Fetch animals from the URL
+async function fetchAnimals() {
+  try {
+    const response = await fetch("http://localhost:3000/characters");
+    const data = await response.json();
     renderAnimals(data);
-  })
-  .catch(err =>{ console.log(err)})
+  } catch (error) {
+    console.log("Error fetching animals:", error);
+  }
+}
 
 // Render the animals on the page
 function renderAnimals(data) {
@@ -48,6 +50,14 @@ function incrementVotes(animal) {
   voteCountElement.textContent = animal.votes;
 }
 
+// Reset the votes for all animals
+async function resetVotes() {
+  try {
+    const response = await fetch(CHARACTERS_URL);
+    const data = await response.json();
+    data.forEach((animal) => {
+      animal.votes = 0;
+    });
 
     await fetch(CHARACTERS_URL, {
       method: "PUT",
@@ -105,4 +115,5 @@ resetButton.addEventListener("click", resetVotes);
 addAnimalForm.addEventListener("submit", addAnimal);
 
 // Fetch and render the animals
-fetchAnimals();
+fetchAnimals(); 
+
